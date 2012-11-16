@@ -1,0 +1,146 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.spaziodati</groupId>
+    <artifactId>datatxt</artifactId>
+    <version>1.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.java>1.6</version.java>
+    </properties>
+
+    <scm>
+        <developerConnection>scm:git:https://git@github.com/SpazioDati/datatxt-client.git</developerConnection>
+        <connection>scm:git:https://git@github.com/SpazioDati/datatxt-client.git</connection>
+        <url>https://github.com/SpazioDati/datatxt-client</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>michele.mostarda</id>
+            <name>Michele Mostarda</name>
+            <email>mostarda [at] spaziodati [dot] eu</email>
+            <roles>
+                <role>Maintainer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-jaxrs</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <site>
+            <id>datatxt.client.website</id>
+            <name>Spaziodati DataTXT Client</name>
+            <url>scm:git:ssh://git@github.com/SpazioDati/datatxt-client.git</url>
+        </site>
+        <repository>
+            <id>datatxt-repo</id>
+            <url>scm:git:ssh://git@github.com/SpazioDati/datatxt-client.git</url>
+        </repository>
+        <snapshotRepository>
+            <id>my.git.server</id>
+            <url>scm:git:ssh://git@github.com/SpazioDati/datatxt-client.git</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
+    <!-- http://maven.apache.org/wagon/wagon-providers/wagon-scm/usage.html -->
+
+    <build>
+        <!--<extensions>-->
+            <!--<extension>-->
+                <!--<groupId>org.apache.maven.wagon</groupId>-->
+                <!--<artifactId>wagon-scm</artifactId>-->
+                <!--<version>2.1</version>-->
+            <!--</extension>-->
+            <!--<extension>-->
+                <!--<groupId>org.apache.maven.scm</groupId>-->
+                <!--<artifactId>maven-scm-manager-plexus</artifactId>-->
+                <!--<version>1.8.1</version>-->
+            <!--</extension>-->
+            <!--<extension>-->
+                <!--<groupId>org.apache.maven.scm</groupId>-->
+                <!--<artifactId>maven-scm-provider-gitexe</artifactId>-->
+                <!--<version>1.8.1</version>-->
+            <!--</extension>-->
+        <!--</extensions>-->
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass />
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <preparationGoals>install</preparationGoals>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <autoVersionSubmodules>false</autoVersionSubmodules>
+                    <tagNameFormat>datatxt-@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <!-- Java Maven Compiler Plugin -->
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${version.java}</source>
+                        <target>${version.java}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <additionalJOption>-J-Xmx1024m</additionalJOption>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+</project>
